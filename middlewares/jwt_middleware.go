@@ -26,6 +26,13 @@ func Protected() fiber.Handler {
 				c.Locals("user_id", uint(uid))
 			}
 
+			if admin, ok := claims["is_admin"].(bool); ok {
+				c.Locals("is_admin", admin)
+			} else {
+				c.Locals("is_admin", false) 
+			}
+
+
 
 			return c.Next()
 		},
