@@ -45,4 +45,12 @@ func SetupRoutes(app *fiber.App) {
 	produk.Post("/", handlers.CreateProduk)
 	produk.Put("/:id", handlers.UpdateProduk)
 	produk.Delete("/:id", handlers.DeleteProduk)
+
+
+	transaksi := api.Group("/transaksi")
+	transaksi.Get("/", handlers.GetAllTransaksi)
+	transaksi.Get("/:id", handlers.GetTransaksiByID)
+	transaksi.Post("/", handlers.CreateTransaksi)
+	transaksi.Put("/:id", handlers.UpdateTransaksi)
+	transaksi.Delete("/:id", handlers.DeleteTransaksi)
 }
