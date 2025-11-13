@@ -17,4 +17,9 @@ func SetupRoutes(app *fiber.App) {
 	protected.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"message": "Kamu berhasil mengakses endpoint toko yang dilindungi JWT"})
 	})
+
+	user := api.Group("/user", middlewares.Protected())
+	user.Get("/", handlers.GetUserProfile)
+	user.Get("/:id", handlers.GetUserByID)
+	user.Put("/update", handlers.UpdateUser)
 }
