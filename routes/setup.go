@@ -37,4 +37,12 @@ func SetupRoutes(app *fiber.App) {
 	kategori.Get("/:id", handlers.GetKategoriByID)
 	kategori.Put("/:id", handlers.UpdateKategori)
 	kategori.Delete("/:id", handlers.DeleteKategori)
+
+
+	produk := api.Group("/produk", middlewares.Protected())
+	produk.Get("/", handlers.GetAllProduk)
+	produk.Get("/:id", handlers.GetProdukByID)
+	produk.Post("/", handlers.CreateProduk)
+	produk.Put("/:id", handlers.UpdateProduk)
+	produk.Delete("/:id", handlers.DeleteProduk)
 }
