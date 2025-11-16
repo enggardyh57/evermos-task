@@ -4,53 +4,43 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"evormos-task/handlers"
 	"evormos-task/middlewares"
-	
 )
 
 func SetupRoutes(app *fiber.App) {
-	api := app.Group("/api")
 
-	api.Post("/register", handlers.Register)
-	api.Post("/login", handlers.Login)
+	auth := app.Group("/auth")
+	auth.Post("/login", handlers.Login)
+	auth.Post("/register", handlers.Register)
 
-	protected := api.Group("/toko", middlewares.Protected())
-	protected.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{"message": "Kamu berhasil mengakses endpoint toko yang dilindungi JWT"})
-	})
-
-	user := api.Group("/user", middlewares.Protected())
+	user := app.Group("/user", middlewares.Protected())
 	user.Get("/", handlers.GetUserProfile)
-	user.Get("/:id", handlers.GetUserByID)
-	user.Put("/update", handlers.UpdateUser)
-	user.Delete("/:id", handlers.DeleteUser)
+	user.Put("/", handlers.UpdateUser)
 
-	alamat := api.Group("/alamat", middlewares.Protected())
+	alamat := user.Group("/alamat")
 	alamat.Get("/", handlers.GetAlamat)
 	alamat.Post("/", handlers.CreateAlamat)
 	alamat.Get("/:id", handlers.GetAlamatByID)
 	alamat.Put("/:id", handlers.UpdateAlamat)
 	alamat.Delete("/:id", handlers.DeleteAlamat)
 
-	kategori := api.Group("/kategori", middlewares.Protected())
-	kategori.Get("/", handlers.GetAllKategori)
-	kategori.Post("/", handlers.CreateKategori)
-	kategori.Get("/:id", handlers.GetKategoriByID)
-	kategori.Put("/:id", handlers.UpdateKategori)
-	kategori.Delete("/:id", handlers.DeleteKategori)
+	category := app.Group("/category", middlewares.Protected())
+	category.Get("/", handlers.GetAllKategori)
+	category.Post("/", handlers.CreateKategori)
+	category.Get("/:id", handlers.GetKategoriByID)
+	category.Put("/:id", handlers.UpdateKategori)
+	category.Delete("/:id", handlers.DeleteKategori)
 
+	// toko := app.Group("/toko", middlewares.Protected())
+	// toko.Get("/my", handlers.GetMyToko)
+	// toko.Put("/:id_toko", handlers.UpdateMyToko)
+	// toko.Get("/:id_toko", handlers.GetTokoByID)
+	// toko.Get("/", handlers.GetAllToko)
 
-	produk := api.Group("/produk", middlewares.Protected())
-	produk.Get("/", handlers.GetAllProduk)
-	produk.Get("/:id", handlers.GetProdukByID)
-	produk.Post("/", handlers.CreateProduk)
-	produk.Put("/:id", handlers.UpdateProduk)
-	produk.Delete("/:id", handlers.DeleteProduk)
-
-
-	transaksi := api.Group("/transaksi")
-	transaksi.Get("/", handlers.GetAllTransaksi)
-	transaksi.Get("/:id", handlers.GetTransaksiByID)
-	transaksi.Post("/", handlers.CreateTransaksi)
-	transaksi.Put("/:id", handlers.UpdateTransaksi)
-	transaksi.Delete("/:id", handlers.DeleteTransaksi)
+	product := app.Group("/product", middlewares.Protected())
+	product.Get("/", handlers.GetAllProduk)
+	product.Get("/:id", handlers.GetProdukByID)
+	product.Post("/", handlers.CreateProduk)
+	product.Put("/:id", handlers.UpdateProduk)
+	product.Delete("/:id", handlers.DeleteProduk)
+	
 }

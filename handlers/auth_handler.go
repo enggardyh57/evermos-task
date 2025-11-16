@@ -49,7 +49,7 @@ func Register(c *fiber.Ctx) error {
 func Login(c *fiber.Ctx) error {
 	var input struct {
 		Email    string `json:"email"`
-		Password string `json:"password"`
+		Kata_sandi string `json:"kata_sandi"`
 	}
 
 	if err := c.BodyParser(&input); err != nil {
@@ -61,7 +61,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(401).JSON(fiber.Map{"error": "Email tidak ditemukan"})
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Kata_sandi), []byte(input.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Kata_sandi), []byte(input.Kata_sandi)); err != nil {
 		return c.Status(401).JSON(fiber.Map{"error": "Password salah"})
 	}
 
