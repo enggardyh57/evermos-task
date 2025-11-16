@@ -30,11 +30,11 @@ func SetupRoutes(app *fiber.App) {
 	category.Put("/:id", handlers.UpdateKategori)
 	category.Delete("/:id", handlers.DeleteKategori)
 
-	// toko := app.Group("/toko", middlewares.Protected())
-	// toko.Get("/my", handlers.GetMyToko)
-	// toko.Put("/:id_toko", handlers.UpdateMyToko)
-	// toko.Get("/:id_toko", handlers.GetTokoByID)
-	// toko.Get("/", handlers.GetAllToko)
+	toko := app.Group("/toko", middlewares.Protected())
+	toko.Get("/my", handlers.GetMyToko)
+	toko.Put("/:id_toko", handlers.UpdateMyToko)
+	toko.Get("/:id_toko", handlers.GetTokoByID)
+	toko.Get("/", handlers.GetAllToko)
 
 	product := app.Group("/product", middlewares.Protected())
 	product.Get("/", handlers.GetAllProduk)

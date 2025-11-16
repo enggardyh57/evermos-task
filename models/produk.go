@@ -11,7 +11,8 @@ type Produk struct {
 	Stok           uint       `json:"stok"`
 	Deskripsi      string    `gorm:"type:text" json:"deskripsi"`
 	IDToko         uint      `json:"id_toko"`     
-	IDKategori     uint      `json:"id_kategori"`  
+	IDKategori     uint      `json:"id_kategori"`
+	Photos []Foto_Produk `json:"photos" gorm:"foreignKey:ID_Produk"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 
